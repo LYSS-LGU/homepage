@@ -23,6 +23,7 @@
           <div class="nav-header">
             <a href="#top">
               <img
+                id="drag-handle"
                 src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1575057716/noticon/eukhux6abtzfv2lhwjfw.svg"
                 alt="navmenu icon"
                 width="20"
@@ -231,5 +232,34 @@
     </section>
 
     <footer>&copy; 2025 LYSS-LGU. All rights reserved.</footer>
+
+    <!-- ✅ 드래그 스크립트는 여기! -->
+    <script>
+      const navContainer = document.querySelector(".floating-nav-container");
+      const dragHandle = document.getElementById("drag-handle");
+
+      let isDragging = false;
+      let offset = { x: 0, y: 0 };
+
+      dragHandle.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        offset.x = e.clientX - navContainer.offsetLeft;
+        offset.y = e.clientY - navContainer.offsetTop;
+        document.body.style.userSelect = "none"; // 텍스트 선택 방지
+      });
+
+      document.addEventListener("mousemove", (e) => {
+        if (isDragging) {
+          navContainer.style.position = "absolute";
+          navContainer.style.left = e.clientX - offset.x + "px";
+          navContainer.style.top = e.clientY - offset.y + "px";
+        }
+      });
+
+      document.addEventListener("mouseup", () => {
+        isDragging = false;
+        document.body.style.userSelect = ""; // 원상복구
+      });
+    </script>
   </body>
 </html>
